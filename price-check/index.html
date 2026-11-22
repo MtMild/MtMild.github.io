@@ -303,7 +303,16 @@ main{padding-bottom:120px}
 .chip.colpill i{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 30%,transparent)}
 .colwrap{position:relative}
 .colwrap input{padding-left:48px!important}
-.colwrap .csw{position:absolute;left:12px;bottom:12px;width:26px;height:26px;border-radius:8px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent);pointer-events:none}
+.colwrap .csw{position:absolute;left:8px;bottom:9px;width:34px;height:34px;border-radius:10px;border:0;padding:0;cursor:pointer;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent);display:grid;place-items:center}
+.colwrap .csw:active{transform:scale(.92)}
+.colwrap .csw::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.75}
+.sheet.colsheet{max-height:min(78vh,640px);text-align:left}
+.colgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow-y:auto;margin:8px -4px 0;padding:4px;-webkit-overflow-scrolling:touch}
+.colopt{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 12px 6px 6px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;text-align:left;cursor:pointer;min-width:0}
+.colopt i{width:34px;height:34px;border-radius:10px;flex:none;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent)}
+.colopt span{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.2;overflow-wrap:break-word}
+.colopt.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.colopt.clear i{background:repeating-linear-gradient(45deg,transparent 0 4px,color-mix(in srgb,var(--ink) 18%,transparent) 4px 6px)}
 .colwrap .csw.none{background:repeating-linear-gradient(45deg,transparent 0 4px,color-mix(in srgb,var(--ink) 18%,transparent) 4px 6px)}
 .colhint{font-size:12px;color:var(--ink-3);margin-top:-4px}
 .colhint:empty{display:none}

@@ -150,14 +150,19 @@ const SWATCH = {black:"#1c1c1e", noir:"#1c1c1e", chocolate:"#4b2e22", luggage:"#
   nickel:"#8f8f8a", gold:"#c9a95b", "pale gold":"#d9c48f", silver:"#c3c4c6", rhodium:"#b8b9bb", ballet:"#efcfc6", "soft pink":"#f1c3c7", pink:"#f1c3c7", navy:"#1f2a45", midnight:"#1c2236",
   admiral:"#2b3e6c", admirl:"#2b3e6c", "prussian blue":"#1e3d5b", blue:"#3c5f8f", husk:"#c9a86b", natural:"#e5dbc5", white:"#f6f6f3", wht:"#f6f6f3", peanut:"#b98a53", rosewood:"#8f4b4b",
   chambray:"#7f97b5", grenadine:"#c33e3a", primrose:"#efd86b", ivy:"#365c3b", cornflower:"#6f8fd6", vtblu:"#9db4cc", cream:"#f1e7cf", "amazon green":"#2f5a43", green:"#3d6b4a", maroon:"#5e1f26", nutmeg:"#8a5a3c", tan:"#b48a5e", camel:"#b08452", beige:"#d9c8a9", olive:"#6b6b3a", taupe:"#8b7d6f", burgundy:"#6a1f2b", wine:"#6a1f2b", cognac:"#9a5a2c", ecru:"#ece3cf", bone:"#e8e0cf", optic:"#f6f6f3", orange:"#d86b2c", yellow:"#e7c84a", purple:"#5b3d72", lilac:"#bba6cf", leopard:"#8c7350",
-  zwart:"#1c1c1e", wit:"#f6f6f3", bruin:"#5b3a28", rood:"#a3222b", blauw:"#3c5f8f", groen:"#3d6b4a", grijs:"#9b9b97", roze:"#f1c3c7", goud:"#c9a95b", zilver:"#c3c4c6", geel:"#e7c84a", oranje:"#d86b2c", paars:"#5b3d72", chocolade:"#4b2e22", vanille:"#eee2c6", eikelbruin:"#8b5a32", kaki:"#b6a37b", nikkel:"#8f8f8a", eierschaal:"#eee7d6", dieprood:"#8c1c24", mosgroen:"#6c703e", steengrijs:"#9b9b97", middernachtsblauw:"#1c2236", admiraalblauw:"#2b3e6c", klimopgroen:"#365c3b", primula:"#efd86b", groengeel:"#c8c23c", "pruisisch blauw":"#1e3d5b"};
+  zwart:"#1c1c1e", wit:"#f6f6f3", bruin:"#5b3a28", rood:"#a3222b", blauw:"#3c5f8f", groen:"#3d6b4a", grijs:"#9b9b97", roze:"#f1c3c7", goud:"#c9a95b", zilver:"#c3c4c6", geel:"#e7c84a", oranje:"#d86b2c", paars:"#5b3d72", chocolade:"#4b2e22", vanille:"#eee2c6", eikelbruin:"#8b5a32", kaki:"#b6a37b", nikkel:"#8f8f8a", eierschaal:"#eee7d6", dieprood:"#8c1c24", mosgroen:"#6c703e", steengrijs:"#9b9b97", middernachtsblauw:"#1c2236", admiraalblauw:"#2b3e6c", klimopgroen:"#365c3b", primula:"#efd86b", groengeel:"#c8c23c", "pruisisch blauw":"#1e3d5b",
+  "черный":"#1c1c1e", "чёрный":"#1c1c1e", "коричневый":"#5b3a28", "браун":"#5b3a28", "белый":"#f6f6f3", "бежевый":"#d9c8a9", "красный":"#a3222b", "синий":"#1f2a45", "голубой":"#7f97b5", "зеленый":"#3d6b4a", "зелёный":"#3d6b4a", "серый":"#9b9b97", "розовый":"#f1c3c7", "золотой":"#c9a95b", "серебряный":"#c3c4c6", "желтый":"#e7c84a", "жёлтый":"#e7c84a", "оранжевый":"#d86b2c", "фиолетовый":"#5b3d72", "бордовый":"#6a1f2b", "кремовый":"#f1e7cf", "хаки":"#b6a37b", "ванильный":"#eee2c6", "шоколадный":"#4b2e22", "оливковый":"#6b6b3a"};
 function swatchOf(name){
   const parts = String(name || "").toLowerCase().replace(/\b(multi|combo|wsh|lt|sh|optic|bright)\b/g, " ").split("/").map(x => x.replace(/\s+/g, " ").trim()).filter(Boolean);
   const one = t => SWATCH[t] || t.split(" ").reverse().map(w => SWATCH[w]).find(Boolean) || null;
   const c = parts.map(one).filter(Boolean);
   return c.length ? c.slice(0, 2) : null;
 }
+const RU_COL = {"черный":"Black","чёрный":"Black","коричневый":"Brown","браун":"Brown","белый":"White","бежевый":"Beige","красный":"Red","синий":"Navy","голубой":"Blue","зеленый":"Green","зелёный":"Green","серый":"Grey","розовый":"Pink","золотой":"Gold","серебряный":"Silver","желтый":"Yellow","жёлтый":"Yellow","оранжевый":"Orange","фиолетовый":"Purple","бордовый":"Burgundy","кремовый":"Cream","хаки":"Khaki","ванильный":"Vanilla","шоколадный":"Chocolate","оливковый":"Olive"};
+// colour names typed in Russian are stored in English (e.g. "Браун" -> "Brown"); parts split by "/" are translated one by one
+const enColour = v => String(v || "").split("/").map(p => { const t = p.trim(); return RU_COL[t.toLowerCase()] || t; }).join("/");
 const lum = h => { const n = parseInt(h.slice(1), 16), f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(n >> 16) + .7152 * f((n >> 8) & 255) + .0722 * f(n & 255); };
+(() => { let n = 0; ITEMS.forEach(i => { if (i.color && /[а-яё]/i.test(i.color)) { const c = enColour(i.color); if (c !== i.color) { i.color = c; n++; } } }); if (n) saveCatalogQuiet(); })();
 const swBg = sw => sw.length > 1 ? `linear-gradient(135deg,${sw[0]} 0 50%,${sw[1]} 50% 100%)` : sw[0];
 const colourOf = it => it.color || it.euColorEn || "";
 function catIcon(it, cls){
@@ -714,7 +719,7 @@ function renderAdd(){
       ${f("fEan","Barcode",e.ean,`inputmode="numeric" class="mono" required`)}
       ${f("fName","Model name",e.name,`list="knownNames" required placeholder="e.g. Carson"`)}
       <datalist id="knownNames">${known.map(n => `<option value="${esc(n)}">`).join("")}</datalist>
-      <label class="ff colwrap"><span>Colour</span><i class="csw" id="fColorSw"></i><input id="fColor" value="${esc(e.color || "")}" autocomplete="off" list="knownColors" maxlength="40" placeholder="e.g. Black, Vanilla/Acorn"></label>
+      <div class="ff colwrap"><span id="fColorLbl">Colour</span><button type="button" class="csw" id="fColorSw" aria-label="Choose a colour" title="Choose a colour"></button><input id="fColor" aria-labelledby="fColorLbl" value="${esc(e.color || "")}" autocomplete="off" list="knownColors" maxlength="40" placeholder="Tap the square or type"></div>
       <div class="colhint" id="fColorHint"></div>
       <datalist id="knownColors">${[...new Set(ITEMS.map(i => i.color).filter(Boolean))].sort().map(n => `<option value="${esc(n)}">`).join("")}</datalist>
       ${f("fNo","Style no.",e.no,`class="mono" autocapitalize="characters" placeholder="e.g. 35S5G2ZS3T"`)}
@@ -727,9 +732,10 @@ function renderAdd(){
     </form>
   </section>`;
   const colIn = document.getElementById("fColor"), colSw = document.getElementById("fColorSw"), colHint = document.getElementById("fColorHint");
-  const paintCol = () => { const v = colIn.value.trim(), sw = swatchOf(v); colSw.className = "csw" + (sw ? "" : " none"); colSw.style.background = sw ? swBg(sw) : "";
+  const paintCol = () => { const v = colIn.value.trim(), sw = swatchOf(v); colSw.className = "csw" + (sw ? "" : " none"); colSw.style.background = sw ? swBg(sw) : ""; colSw.style.color = sw && sw.reduce((a, h) => a + lum(h), 0) / sw.length < .32 ? "#fff" : "#1a1612";
     colHint.textContent = !v ? "The icon takes the colour of the bag." : sw ? "" : "Colour not recognised: the icon keeps its default look."; };
   colIn.oninput = paintCol; paintCol();
+  colSw.onclick = () => colourSheet(colIn.value.trim(), v => { colIn.value = v; paintCol(); });
   document.getElementById("fillPhoto").onclick = () => document.getElementById("photoInput").click();
   document.getElementById("fillGallery").onclick = () => document.getElementById("galleryInput").click();
   if (lastPhoto) aiState().then(st => {
@@ -766,7 +772,7 @@ function renderAdd(){
     if ([price, orig, outlet, eu, usd].some(x => x != null && isNaN(x))) { toast(I.alert, "Prices must be numbers, e.g. 129,00"); return; }
     const st = v("fStore"), bk = v("fBack");
     const stock = st === "" && bk === "" ? null : {store: Math.max(0, parseInt(st) || 0), back: Math.max(0, parseInt(bk) || 0)};
-    const data = {ean, name:v("fName"), no:v("fNo").toUpperCase(), color:v("fColor"), size:v("fSize"), cat:document.getElementById("fCat").value, type: e.existing ? e.existing.type || "" : "", orig, outlet, price, eu, usd, stock, loc:v("fLoc")};
+    const data = {ean, name:v("fName"), no:v("fNo").toUpperCase(), color:enColour(v("fColor")), size:v("fSize"), cat:document.getElementById("fCat").value, type: e.existing ? e.existing.type || "" : "", orig, outlet, price, eu, usd, stock, loc:v("fLoc")};
     let it;
     if (e.existing && data.orig !== e.existing.orig) data.origFromSite = false;
     if (!e.existing || data.eu !== e.existing.eu) { data.euV = EU_V; if (e.existing && data.eu !== e.existing.eu) data.euWas = null; }   // a price typed here is kept until a newer EU table arrives
@@ -956,6 +962,28 @@ document.getElementById("newListBtn").onclick = () => { if (S.view === "queue") 
 /* after a tap on a phone, focusing the scan field would pop up the on-screen keyboard: only refocus where a hardware keyboard/scanner is the input (mouse pointer) */
 function refocusScan(){ if (matchMedia("(pointer: coarse)").matches) { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); return; } const c = document.getElementById("code"); c && c.focus({preventScroll:true}); }
 /* yes/no sheet (no browser dialogs: they block the page and the scanner) */
+function knownColours(){
+  const m = new Map();
+  ITEMS.forEach(i => { const c = (i.color || i.euColorEn || "").trim(); if (c && swatchOf(c)) { const k = c.toLowerCase(); if (!m.has(k)) m.set(k, c); } });
+  return [...m.values()].sort((a, b) => a.localeCompare(b));
+}
+function colourSheet(cur, onPick){
+  closeSheet();
+  const list = knownColours(), lc = cur.toLowerCase();
+  const w = document.createElement("div"); w.className = "sheet-wrap"; w.id = "sheet";
+  w.innerHTML = `<div class="sheet colsheet" role="dialog" aria-modal="true" aria-labelledby="shT"><b id="shT">Choose colour</b><p>${list.length} colours from the base</p>
+    <div class="colgrid">${list.map((c, k) => `<button type="button" class="colopt${c.toLowerCase() === lc ? " on" : ""}" data-k="${k}"><i style="background:${swBg(swatchOf(c))}"></i><span>${esc(c).replace(/\//g, "/\u200b")}</span></button>`).join("")}
+    <button type="button" class="colopt clear" data-k="-1"><i></i><span>No colour</span></button></div>
+    <div class="sheet-btns" style="grid-template-columns:1fr"><button type="button" class="btn" id="shNo">Cancel</button></div></div>`;
+  document.body.appendChild(w);
+  const done = () => closeSheet();
+  w.onclick = e => { if (e.target === w) done(); };
+  document.getElementById("shNo").onclick = done;
+  w.querySelectorAll(".colopt").forEach(b => b.onclick = () => { const k = +b.dataset.k; done(); onPick(k < 0 ? "" : list[k]); });
+  sheetKey = e => { if (e.key === "Escape") { e.preventDefault(); done(); } };
+  document.addEventListener("keydown", sheetKey);
+  const on = w.querySelector(".colopt.on"); if (on) on.scrollIntoView({block:"center"});
+}
 function confirmSheet(title, text, yes, onYes){
   closeSheet();
   const w = document.createElement("div"); w.className = "sheet-wrap"; w.id = "sheet";
